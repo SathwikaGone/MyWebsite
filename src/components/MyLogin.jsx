@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class MyLogin extends Component {
   state = {
     uname: "",
-    password: ""
+    upassword: ""
   };
 
   onSubmit = () => {
@@ -23,21 +23,25 @@ class MyLogin extends Component {
       <form id="logform">
         <h2>Login Form</h2>
 
-        <label for="email">Email:</label>
-        <input
-          type="email"
-          id="ulemail"
-          name="email"
-          value={this.state.uname}
-        />
+        <label for="email">
+          Email:
+          <input
+            type="email"
+            id="ulemail"
+            name="email"
+            value={this.state.uname}
+          />
+        </label>
 
-        <label for="upassword">Password:</label>
-        <input
-          type="password"
-          id="ulpassword"
-          name="upassword"
-          value={this.state.uname}
-        />
+        <label for="upassword">
+          Password:
+          <input
+            type="password"
+            id="ulpassword"
+            name="upassword"
+            value={this.state.uname}
+          />
+        </label>
 
         <button type="button" onClick={this.onClear}>
           Clear

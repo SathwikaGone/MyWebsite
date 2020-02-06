@@ -1,18 +1,13 @@
 import React, { Component } from "react";
 
 class MyRegistration extends Component {
-  constructor() {
-    super();
-    this.state = {
-      uname: "",
-      uemail: "",
-      uphonenumber: "",
-      upassword: "",
-      urepassword: ""
-    };
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
+  state = {
+    uname: "",
+    uemail: "",
+    uphonenumber: "",
+    upassword: "",
+    urepassword: ""
+  };
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -28,6 +23,9 @@ class MyRegistration extends Component {
       upassword: "",
       urepassword: ""
     });
+    // const p = [...this.state];
+    // p.map(val => (val = ""));
+    // this.setState(() => p);
   };
 
   onSubmit = () => {
@@ -50,50 +48,60 @@ class MyRegistration extends Component {
     return (
       <form id="regform">
         <h2>Registration Form</h2>
-        <label for="name"> Name:</label>
-        <input
-          type="text"
-          id="name"
-          name="uname"
-          value={this.state.uname}
-          onChange={this.onChange}
-        />
+        <label for="name">
+          Name:
+          <input
+            type="text"
+            id="name"
+            name="uname"
+            value={this.state.uname}
+            onChange={this.onChange}
+          />
+        </label>
 
-        <label>Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="uemail"
-          value={this.state.uemail}
-          onChange={this.onChange}
-        />
+        <label>
+          Email:
+          <input
+            type="email"
+            id="email"
+            name="uemail"
+            value={this.state.uemail}
+            onChange={this.onChange}
+          />
+        </label>
 
-        <label>Phone Number:</label>
-        <input
-          type="phonenumber"
-          id="uphonenumber"
-          name="uphonenumber"
-          value={this.state.uphonenumber}
-          onChange={this.onChange}
-        />
+        <label>
+          Phone Number:
+          <input
+            type="phonenumber"
+            id="uphonenumber"
+            name="uphonenumber"
+            value={this.state.uphonenumber}
+            onChange={this.onChange}
+          />
+        </label>
 
-        <label>Password:</label>
-        <input
-          type="password"
-          id="upassword"
-          name="upassword"
-          value={this.state.upassword}
-          onChange={this.onChange}
-        />
+        <label>
+          Password:
+          <input
+            type="password"
+            id="upassword"
+            name="upassword"
+            value={this.state.upassword}
+            onChange={this.onChange}
+          />
+        </label>
 
-        <label>Re-Password:</label>
-        <input
-          type="password"
-          id="urepassword"
-          name="urepassword"
-          value={this.state.urepassword}
-          onChange={this.onChange}
-        />
+        <label>
+          Re-Password:
+          <input
+            type="password"
+            id="urepassword"
+            name="urepassword"
+            value={this.state.urepassword}
+            onChange={this.onChange}
+          />
+        </label>
 
         <button type="button" onClick={this.onClear}>
           Clear
