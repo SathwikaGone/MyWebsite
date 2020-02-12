@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Facebook from "./Facebook";
+// import FacebookLogin from "react-facebook-login";
 
 class MyLogin extends Component {
   state = {
@@ -20,36 +22,40 @@ class MyLogin extends Component {
   };
   render() {
     return (
-      <form id="logform">
-        <h2>Login Form</h2>
+      <div>
+        <form id="logform">
+          <h2>Login Form</h2>
 
-        <label for="email">
-          Email:
-          <input
-            type="email"
-            id="ulemail"
-            name="email"
-            value={this.state.uname}
-          />
-        </label>
+          <label for="email">
+            Email:
+            <input
+              type="email"
+              id="ulemail"
+              name="email"
+              value={this.state.uname}
+            />
+          </label>
 
-        <label for="upassword">
-          Password:
-          <input
-            type="password"
-            id="ulpassword"
-            name="upassword"
-            value={this.state.uname}
-          />
-        </label>
+          <label for="upassword">
+            Password:
+            <input
+              type="password"
+              id="ulpassword"
+              name="upassword"
+              value={this.state.uname}
+            />
+          </label>
 
-        <button type="button" onClick={this.onClear}>
-          Clear
-        </button>
-        <button type="button" onClick={this.onSubmit}>
-          Submit
-        </button>
-      </form>
+          <button type="button" onClick={this.onClear}>
+            Clear
+          </button>
+          <button type="button" onClick={this.onSubmit}>
+            Submit
+          </button>
+        </form>
+
+        {/** <Facebook />*/}
+      </div>
     );
   }
 }
