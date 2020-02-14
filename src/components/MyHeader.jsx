@@ -9,27 +9,15 @@ class MyHeader extends Component {
         <header>
           <img id="logo" src={logo} alt="working on it" />
           <h2>Shopping Buddy</h2>
+
           <div className="linkright">
             <Link className="headerLink" to="/MyLogin">
               Login
             </Link>
-
             <Link className="headerLink" to="/MyRegistration">
               Register
             </Link>
           </div>
-          {/**<ul>
-             <li>
-               <Link className="headerLink" to="/MyLogin">
-                 Login
-               </Link>
-             </li>
-             <li>
-               <Link className="headerLink" to="/MyRegistration">
-                 Register
-               </Link>
-             </li>
-           </ul> */}
         </header>
       </div>
     );
