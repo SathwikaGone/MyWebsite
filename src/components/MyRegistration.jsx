@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 // import { useHistory } from "react-router-dom";
 
+const ErrorValidationLabel = ({ txtLbl }) => (
+  <label htmlFor="" style={{ color: "red", display: "block" }}>
+    {txtLbl}
+  </label>
+);
+var err = [];
 class MyRegistration extends Component {
   state = {
     uname: "",
@@ -8,7 +14,7 @@ class MyRegistration extends Component {
     uphonenumber: "",
     upassword: "",
     urepassword: "",
-    res: ""
+    res: []
   };
 
   onChange = e => {
@@ -24,6 +30,8 @@ class MyRegistration extends Component {
       uphonenumber: "",
       upassword: "",
       urepassword: "",
+      isValid: true,
+      error: "",
       res: []
     });
   };
@@ -37,23 +45,32 @@ class MyRegistration extends Component {
     };
 
     console.log("in OnSubmit");
-    let err = [];
+
     if (this.state.uname.length < 6) {
       console.log("name length");
-      err.push({ message: "length of the name must be more than 5" });
-      alert("length of the name must be more than 5");
+      // alert("length of the name must be more than 5");
+      this.setState({
+        isValid: false,
+        error: "length of the name must be more than 5"
+      });
     }
     if (this.state.uphonenumber.length !== 10) {
       console.log("Phone number");
-      err.push({ message: " Phone number length is more then 10 digtes" });
-      alert(" Phone number length is more then 10 digtes");
+      // alert(" Phone number length is more then 10 digtes");
+      this.setState({
+        isValid: false,
+        error: "Phone number length is more then 10 digtes"
+      });
     }
     if (this.state.upassword !== this.state.urepassword) {
       console.log("password");
-      err.push({ message: "Password and re-password doesnt match" });
-      alert("Password and re-password doesnt match");
+      // alert("Password and re-password doesnt match");
+      this.setState({
+        isValid: false,
+        error: "Password and re-password doesnt match"
+      });
     }
-    if (!err.length >= 0) {
+    if (err === "") {
       fetch("http://localhost:5000/adduser", {
         method: "POST",
         headers: {
@@ -72,6 +89,11 @@ class MyRegistration extends Component {
   };
 
   render() {
+    const renderValidationError = this.state.isValid ? (
+      ""
+    ) : (
+      <ErrorValidationLabel txtLbl={this.state.error} />
+    );
     return (
       <div>
         <form id="regform">
@@ -138,7 +160,7 @@ class MyRegistration extends Component {
             Submit
           </button>
         </form>
-        {this.state.res}
+        {renderValidationError}
       </div>
     );
   }
