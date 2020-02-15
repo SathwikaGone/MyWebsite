@@ -2,7 +2,17 @@ import React, { Component } from "react";
 // import { useHistory } from "react-router-dom";
 
 const ErrorValidationLabel = ({ txtLbl }) => (
-  <label htmlFor="" style={{ color: "red", display: "block" }}>
+  <label
+    htmlFor=""
+    style={{
+      color: "red",
+      display: "block",
+      backgroundColor: "yellow",
+      textAlign: "center",
+      width: "86%",
+      height: "30px"
+    }}
+  >
     {txtLbl}
   </label>
 );
@@ -14,6 +24,8 @@ class MyRegistration extends Component {
     uphonenumber: "",
     upassword: "",
     urepassword: "",
+    error: "",
+    isValid: true,
     res: []
   };
 
@@ -98,6 +110,7 @@ class MyRegistration extends Component {
       <div>
         <form id="regform">
           <h2>Registration Form</h2>
+          {renderValidationError}
           <label htmlFor="name">
             Name:
             <input
@@ -160,7 +173,6 @@ class MyRegistration extends Component {
             Submit
           </button>
         </form>
-        {renderValidationError}
       </div>
     );
   }
