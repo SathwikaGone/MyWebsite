@@ -8,16 +8,19 @@ class MyHeader extends Component {
       <div>
         <header>
           <img id="logo" src={logo} alt="working on it" />
+
           <h2>Shopping Buddy</h2>
 
-          <div className="linkright">
-            <Link className="headerLink" to="/MyLogin">
-              Login
-            </Link>
-            <Link className="headerLink" to="/MyRegistration">
-              Register
-            </Link>
-          </div>
+          <nav>
+            <div className="linkright">
+              <Link className="headerLink" to="/MyLogin">
+                Login
+              </Link>
+              <Link className="headerLink" to="/MyRegistration">
+                Register
+              </Link>
+            </div>
+          </nav>
         </header>
       </div>
     );

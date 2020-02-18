@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { useHistory } from "react-router-dom";
 
 const ErrorValidationLabel = ({ txtLbl }) => (
   <label
@@ -7,10 +6,11 @@ const ErrorValidationLabel = ({ txtLbl }) => (
     style={{
       color: "red",
       display: "block",
-      backgroundColor: "yellow",
+      backgroundColor: "#eedc82",
       textAlign: "center",
       width: "86%",
-      height: "30px"
+      minHeight: "30px",
+      marginTop: "5px"
     }}
   >
     {txtLbl}

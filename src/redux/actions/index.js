@@ -1,9 +1,9 @@
 import * as Types from "./types";
 
-export const loginUser = (username, password) => {
+export const loginUser = (uemail, upassword) => {
   return {
     type: Types.LOGIN_USER,
-    uemail,
-    upassword
+    email: uemail,
+    password: upassword
   };
 };

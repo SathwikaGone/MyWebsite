@@ -1,13 +1,36 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+// import { useHistory } from "react-router-dom";
+import { loginUser } from "../redux/actions/index";
 // import Facebook from "./Facebook";
 // import FacebookLogin from "react-facebook-login";
 
+const ErrorValidationLabel = ({ txtLbl }) => (
+  <label
+    htmlFor=""
+    style={{
+      color: "red",
+      display: "block",
+      backgroundColor: "#eedc82",
+      textAlign: "center",
+      width: "86%",
+      minHeight: "30px",
+      marginTop: "5px"
+    }}
+  >
+    {txtLbl}
+  </label>
+);
 class MyLogin extends Component {
   state = {
     uemail: "",
     upassword: "",
-    res: []
+    error: "",
+    isValid: true,
+    result: []
   };
+
+  componentDidMount() {}
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -19,46 +42,52 @@ class MyLogin extends Component {
     this.setState({
       uemail: "",
       upassword: "",
-      res: []
+      error: "",
+      isValid: true
     });
   };
 
   onSubmit = () => {
     console.log("in OnSubmit");
     if (this.state.upassword.length < 6) {
-      console.log("password");
-      alert("Password length must be more that 5");
+      this.setState({
+        isValid: false,
+        error: "Phone number length is more then 10 digtes"
+      });
     } else {
-      //Get Details
-      fetch("http://localhost:5000/getuser", {
-        method: "GET", //  mode: "no-cors", // this is not required, this will disallow cors requests. this is the error
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-        .then(response => {
-          console.log(response);
-          return response.json();
-        })
-        .then(data => {
-          console.log(data);
-          this.setState({
-            res: data
-          });
-          // console.log(this.state.res);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      console.log("res", this.state.res);
-      // this.onChangePage();
+      const { uemail, upassword } = this.state;
+      // this.props.history.push("/Home");
+      this.props.dispatch(loginUser(uemail, upassword));
+      //   //Get Details
+      //   fetch("http://localhost:5000/getuser", {
+      //     method: "GET", //  mode: "no-cors", // this is not required, this will disallow cors requests. this is the error
+      //     headers: {
+      //       "Content-Type": "application/json"
+      //     }
+      //   })
+      //     .then(response => {
+      //       console.log(response);
+      //       return response.json();
+      //     })
+      //     .then(data => {
+      //       console.log(data);
+      //       this.setState({
+      //         res: data
+      //       });
+      //       // console.log(this.state.res);
+      //     })
+      //     .catch(error => {
+      //       console.log(error);
+      //     });
+      //   console.log("res", this.state.res);
+      //   // this.onChangePage();
     }
   };
 
   // onChangePage() {
   //   console.log("res val in on change page ", this.state.res);
-  //   if (this.state.res.length > 0) {
-  //     let data = this.state.res;
+  //   if (this.state.result.length > 0) {
+  //     let data = this.state.result;
   //     console.log("data ", data);
   //     const val = data.filter(record => {
   //       console.log("record email" + record.email);
@@ -72,18 +101,40 @@ class MyLogin extends Component {
   //     console.log("val" + val);
   //   }
   // }
+
+  componentDidUpdate(newProps, prevState) {
+    if (newProps.result !== prevState.result) {
+      console.log("in component did mount", newProps.result);
+      this.setState({ result: newProps.result });
+      console.log("result in state", this.state.result);
+    }
+  }
+
+  static getDerivedStateFromProps(newProps, prevState) {
+    console.log(newProps.result);
+    if (newProps.result !== prevState.result) {
+      console.log(" in Derived state newprops from result", newProps.result);
+    }
+
+    return null;
+  }
   render() {
+    const renderValidationError = this.state.isValid ? (
+      ""
+    ) : (
+      <ErrorValidationLabel txtLbl={this.state.error} />
+    );
     return (
       <div>
         <form id="logform">
           <h2>Login Form</h2>
-
+          {renderValidationError}
           <label htmlFor="email">
             Email:
             <input
               type="email"
               id="ulemail"
-              name="email"
+              name="uemail"
               value={this.state.uname}
               onChange={this.onChange}
             />
@@ -107,10 +158,19 @@ class MyLogin extends Component {
             Submit
           </button>
         </form>
+        {console.log(this.state.result)}
         {/** <Facebook />*/}
       </div>
     );
   }
 }
 
-export default MyLogin;
+const mapStateToProps = state => {
+  return {
+    result: state.login.result
+  };
+};
+
+export default connect(mapStateToProps)(MyLogin);
+
+// export default MyLogin;
