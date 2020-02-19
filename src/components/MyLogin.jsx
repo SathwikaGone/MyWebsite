@@ -56,8 +56,9 @@ class MyLogin extends Component {
       });
     } else {
       const { uemail, upassword } = this.state;
-      // this.props.history.push("/Home");
       this.props.dispatch(loginUser(uemail, upassword));
+      this.props.history.push("/Home");
+
       //   //Get Details
       //   fetch("http://localhost:5000/getuser", {
       //     method: "GET", //  mode: "no-cors", // this is not required, this will disallow cors requests. this is the error
@@ -111,7 +112,7 @@ class MyLogin extends Component {
   }
 
   static getDerivedStateFromProps(newProps, prevState) {
-    console.log(newProps.result);
+    console.log("new props in derived state", newProps.result);
     if (newProps.result !== prevState.result) {
       console.log(" in Derived state newprops from result", newProps.result);
     }
@@ -158,7 +159,6 @@ class MyLogin extends Component {
             Submit
           </button>
         </form>
-        {console.log(this.state.result)}
         {/** <Facebook />*/}
       </div>
     );

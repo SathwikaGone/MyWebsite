@@ -11,12 +11,11 @@ import {
 import * as Types from "../actions/types";
 import { GetDataFromServer, deleteTodoAPI } from "../service";
 
-const baseUrl = "http://localhost:5000/getuser";
-//const baseUrl2 = 'https://fierce-crag-76882.herokuapp.com';
-//const aws = 'http://18.222.167.189:5000';
 function* fetchLoginUser(action) {
   try {
-    console.log("Action->" + JSON.stringify(action));
+    const baseUrl = "http://localhost:5000/getuser";
+
+    console.log("Action in fetchloginUser at sagas->" + JSON.stringify(action));
     let formBody = {};
     formBody.email = action.email; //action.code;
     formBody.password = action.password; //action.provider;
@@ -44,8 +43,36 @@ function* fetchLoginUser(action) {
   }
 }
 
+function* createpost(action) {
+  try {
+    const reqMethod = "POST";
+    const baseUrl = "https://jsonplaceholder.typicode.com/posts";
+    let formBody = action.payload;
+
+    console.log("Action in createpost saga->" + JSON.stringify(action));
+    const response = yield call(
+      GetDataFromServer,
+      baseUrl,
+      reqMethod,
+      formBody
+    );
+    const result = yield response.json();
+    if (result.error) {
+      yield put({
+        type: Types.CREATE_POST_SERVER_RESPONSE_ERROR,
+        error: result.error
+      });
+    } else {
+      yield put({ type: Types.CREATE_POST_SERVER_RESPONSE_SUCCESS, result });
+    }
+  } catch (error) {
+    console.log("error at saga createpost", error);
+  }
+}
+
 export default function* rootSaga(params) {
   yield takeLatest(Types.LOGIN_USER, fetchLoginUser);
+  yield takeLatest(Types.CREATE_POST, createpost);
 
   console.log("ROOT SAGA");
 }

@@ -7,3 +7,12 @@ export const loginUser = (uemail, upassword) => {
     password: upassword
   };
 };
+
+const createpost = obj => {
+  return {
+    type: Types.CREATE_POST,
+    payload: obj
+  };
+};
+
+export default createpost;
