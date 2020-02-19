@@ -1,12 +1,11 @@
 import * as Types from "../actions/types";
 
 const initialstate = {
-  post: {
-    userId: "",
-    id: "",
-    title: "",
-    body: ""
-  }
+  post: []
+  // userId: "",
+  // id: "",
+  // title: "",
+  // body: ""
 };
 
 const handleCreatepostServerResponseSuccess = (state, action) => {
@@ -29,11 +28,13 @@ const createpost = (state = initialstate, action) => {
     case Types.CREATE_POST:
       return { post: [...state.post.concat(action.payload)] };
       break;
-    case Types.LOGIN_USER_SERVER_RESPONSE_ERROR:
+    case Types.CREATE_POST_SERVER_RESPONSE_ERROR:
       return handlecreatepostServerResponseError(state);
       break;
-    case Types.LOGIN_USER_SERVER_RESPONSE_SUCCESS:
+    case Types.CREATE_POST_SERVER_RESPONSE_SUCCESS:
       return handleCreatepostServerResponseSuccess(state, action);
+    default:
+      return state;
   }
 };
 

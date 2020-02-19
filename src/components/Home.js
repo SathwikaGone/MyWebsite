@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-// import { connect } from "react-redux";
-// import createpost from "../redux/actions/index";
+import { connect } from "react-redux";
+import createpost from "../redux/actions/index";
 
 class Home extends Component {
   state = {
@@ -12,7 +12,7 @@ class Home extends Component {
     obj: []
   };
   componentDidMount() {
-    fetch("https://jsonplaceholder.typicode.com/posts", {
+    fetch("https://jsonplaceholder.typicode.com/posts?_limit=7", {
       method: "GET",
       header: { "Content-Type": "application/json" }
     })
@@ -32,19 +32,27 @@ class Home extends Component {
   };
 
   onSubmit = e => {
-    // e.preventDefault();
-    // this.setState();
-    // const obj = {
-    //   userId: this.state.userid,
-    //   id: this.state.itemid,
-    //   title: this.state.title,
-    //   body: this.state.body
-    // };
-    // this.props.dispatch(createpost(obj));
+    e.preventDefault();
+    const obj = {
+      userId: this.state.userId,
+      id: this.state.id,
+      title: this.state.title,
+      body: this.state.body
+    };
+    this.props.dispatch(createpost(obj));
     console.log("submitted");
   };
 
   render() {
+    {
+      const p = this.state.posts.map(post => {
+        return [
+          <p>
+            Title: {post.title} Body:{post.body}
+          </p>
+        ];
+      });
+    }
     return (
       <div>
         <form>
@@ -81,23 +89,34 @@ class Home extends Component {
               onChange={this.onChange}
             ></input>
           </label>
-          <button onSubmit={this.onSubmit}>Submit</button>
+          <button onClick={this.onSubmit}>Submit</button>
         </form>
+
+        <div>
+          <p>Posts:</p>
+          {this.state.posts.map(post => (
+            <p>
+              Hello, {post.title} from {post.body}!
+            </p>
+          ))}
+        </div>
       </div>
     );
   }
 }
-// const mapPropsToState=(state)=>{
-//   return
 
-// }
+const mapStateToProps = state => {
+  return {
+    result: state.login.result
+  };
+};
 
-// const mapDispatchToState = dispatch => {
-//   return {
-//     createpost: () => dispatch(createpost())
-//   };
-// };
+const mapDispatchToState = dispatch => {
+  return {
+    createpost: () => dispatch(createpost())
+  };
+};
 
-// export default connect(mapDispatchToState)(Home);
+export default connect(mapDispatchToState)(Home);
 
-export default Home;
+// export default Home;
