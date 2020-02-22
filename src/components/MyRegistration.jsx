@@ -16,7 +16,6 @@ const ErrorValidationLabel = ({ txtLbl }) => (
     {txtLbl}
   </label>
 );
-var err = [];
 class MyRegistration extends Component {
   state = {
     uname: "",
@@ -82,7 +81,7 @@ class MyRegistration extends Component {
         error: "Password and re-password doesnt match"
       });
     }
-    if (err === "") {
+    if (this.state.error === "" || this.state.error === "undefined") {
       fetch("http://localhost:5000/adduser", {
         method: "POST",
         headers: {

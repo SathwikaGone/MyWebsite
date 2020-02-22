@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import login from "./login";
-import createpost from "./createpost";
+import postReducer from "./postReducer";
 
 export default combineReducers({
   login,
-  createpost
+  postReducer
 
   //timesheet: CreatTimeSheet, another way of creating reducers
 });

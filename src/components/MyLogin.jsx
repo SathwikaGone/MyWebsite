@@ -30,8 +30,6 @@ class MyLogin extends Component {
     result: []
   };
 
-  componentDidMount() {}
-
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
     // console.log([e.target.name] + " is " + e.target.value);
@@ -57,7 +55,7 @@ class MyLogin extends Component {
     } else {
       const { uemail, upassword } = this.state;
       this.props.dispatch(loginUser(uemail, upassword));
-      this.props.history.push("/Home");
+      // this.props.history.push("/Home");
 
       //   //Get Details
       //   fetch("http://localhost:5000/getuser", {

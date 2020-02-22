@@ -60,3 +60,14 @@ export function deleteTodoAPI(formBody) {
     headers: myHeaders
   }).then(res => res.json());
 }
+export function deletePost(apiPath) {
+  // console.log("FORM BODY" + JSON.stringify(formBody));
+  let myHeaders = new Headers();
+
+  myHeaders.append("Content-Type", "application/json");
+  return fetch(apiPath, {
+    method: "DELETE",
+    //    body: JSON.stringify(formBody),
+    headers: myHeaders
+  }).then(res => res.json());
+}

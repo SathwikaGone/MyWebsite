@@ -8,11 +8,22 @@ export const loginUser = (uemail, upassword) => {
   };
 };
 
-const createpost = obj => {
+export const createpost = obj => {
   return {
     type: Types.CREATE_POST,
     payload: obj
   };
 };
 
-export default createpost;
+export const readpost = () => {
+  return {
+    type: Types.READ_POST
+  };
+};
+
+export const deletepost = id => {
+  return {
+    type: Types.DELETE_POST,
+    payload: id
+  };
+};
