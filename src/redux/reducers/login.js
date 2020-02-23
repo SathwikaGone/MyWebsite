@@ -8,6 +8,7 @@ const initialUserObj = {
   isValidToken: false,
   isBusiness: false,
   empDetails: {},
+  registeredUserDetails: {},
   result: {},
   user: {
     email: "",
@@ -23,18 +24,40 @@ const initialUserObj = {
   }
 };
 
-const handleLoginServerResponseSuccess = (state, action) => {
+//storing fetched users to redux store
+const handleLoginSuccess = (state, action) => {
   console.log("REdux" + JSON.stringify(action));
   let newState = { ...state };
   if (action.result !== undefined) {
     newState = Object.assign({}, state, {
-      result: Object.assign({}, action.result)
+      signUpUsersList: Object.assign([], action.result)
     });
   }
   console.log("STATE->" + JSON.stringify(newState));
   return { ...newState };
 };
-const handleLoginServerResponseError = (state, action) => {
+const handleLoginError = (state, action) => {
+  let newState = { ...state };
+  return { ...newState };
+};
+
+//storing Registered details
+
+const registernewUser = (state, action) => {
+  let newState = { ...state };
+  if (action.payload !== undefined) {
+    newState = Object.assign({}, state, {
+      registeredUserDetails: Object.assign([], action.payload)
+    });
+  }
+  console.log("STATE->" + JSON.stringify(newState));
+  return { ...newState };
+};
+const registerUserSuccess = (state, action) => {
+  let newState = { ...state };
+  return { ...newState };
+};
+const registerUserError = state => {
   let newState = { ...state };
   return { ...newState };
 };
@@ -42,14 +65,17 @@ const handleLoginServerResponseError = (state, action) => {
 export default (state = initialUserObj, action) => {
   switch (action.type) {
     case Types.LOGIN_USER:
-      return Object.assign({}, state, {
-        email: action.email,
-        password: action.password
-      });
+      return state;
     case Types.LOGIN_USER_SERVER_RESPONSE_ERROR:
-      return handleLoginServerResponseError(state);
+      return handleLoginError(state);
     case Types.LOGIN_USER_SERVER_RESPONSE_SUCCESS:
-      return handleLoginServerResponseSuccess(state, action);
+      return handleLoginSuccess(state, action);
+    case Types.REGISTER_USER:
+      return registernewUser(state, action);
+    case Types.REGISTER_USER_SUCCESS:
+      return registerUserSuccess(state, action);
+    case Types.REGISTER_USER_ERROR:
+      return registerUserError(state);
     default:
       return state;
   }

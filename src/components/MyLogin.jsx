@@ -44,75 +44,61 @@ class MyLogin extends Component {
       isValid: true
     });
   };
+  componentDidMount = () => {
+    this.props.dispatch(loginUser());
+  };
 
   onSubmit = () => {
     console.log("in OnSubmit");
     if (this.state.upassword.length < 6) {
       this.setState({
         isValid: false,
-        error: "Phone number length is more then 10 digtes"
+        error: "Password length must be more than 5 characters"
       });
     } else {
-      const { uemail, upassword } = this.state;
-      this.props.dispatch(loginUser(uemail, upassword));
-      // this.props.history.push("/Home");
-
-      //   //Get Details
-      //   fetch("http://localhost:5000/getuser", {
-      //     method: "GET", //  mode: "no-cors", // this is not required, this will disallow cors requests. this is the error
-      //     headers: {
-      //       "Content-Type": "application/json"
-      //     }
-      //   })
-      //     .then(response => {
-      //       console.log(response);
-      //       return response.json();
-      //     })
-      //     .then(data => {
-      //       console.log(data);
-      //       this.setState({
-      //         res: data
-      //       });
-      //       // console.log(this.state.res);
-      //     })
-      //     .catch(error => {
-      //       console.log(error);
-      //     });
-      //   console.log("res", this.state.res);
-      //   // this.onChangePage();
+      this.onChangePage();
     }
   };
 
-  // onChangePage() {
-  //   console.log("res val in on change page ", this.state.res);
-  //   if (this.state.result.length > 0) {
-  //     let data = this.state.result;
-  //     console.log("data ", data);
-  //     const val = data.filter(record => {
-  //       console.log("record email" + record.email);
-  //       if (
-  //         record.email === this.state.uemail &&
-  //         record.password === this.state.upassword
-  //       ) {
-  //         return record;
-  //       }
-  //     });
-  //     console.log("val" + val);
+  onChangePage = () => {
+    if (this.state.result.length > 0) {
+      let data = this.state.result;
+      console.log("data ", data);
+      const val = data.filter(record => {
+        console.log("record email" + record.email);
+        if (
+          record.email === this.state.uemail &&
+          record.password === this.state.upassword
+        ) {
+          return record;
+        }
+        return null;
+      });
+      console.log("val" + val);
+      if (val.length > 0) {
+        this.props.history.push("./Home");
+      } else {
+        this.setState({
+          isValid: false,
+          error: "Login failed"
+        });
+      }
+    }
+  };
+
+  // componentDidUpdate(newProps, prevState) {
+  //   if (newProps.result !== prevState.result) {
+  //     console.log("in component did mount", newProps.result);
+  //     this.setState({ result: newProps.result });
+  //     console.log("result in state", this.state.result);
   //   }
   // }
-
-  componentDidUpdate(newProps, prevState) {
-    if (newProps.result !== prevState.result) {
-      console.log("in component did mount", newProps.result);
-      this.setState({ result: newProps.result });
-      console.log("result in state", this.state.result);
-    }
-  }
 
   static getDerivedStateFromProps(newProps, prevState) {
     console.log("new props in derived state", newProps.result);
     if (newProps.result !== prevState.result) {
       console.log(" in Derived state newprops from result", newProps.result);
+      return { result: newProps.result };
     }
 
     return null;
@@ -165,7 +151,7 @@ class MyLogin extends Component {
 
 const mapStateToProps = state => {
   return {
-    result: state.login.result
+    result: state.login.signUpUsersList
   };
 };
 

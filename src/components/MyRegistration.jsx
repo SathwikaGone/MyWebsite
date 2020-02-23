@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as Actions from "../redux/actions";
 
 const ErrorValidationLabel = ({ txtLbl }) => (
   <label
@@ -25,7 +27,7 @@ class MyRegistration extends Component {
     urepassword: "",
     error: "",
     isValid: true,
-    res: []
+    result: []
   };
 
   onChange = e => {
@@ -43,20 +45,32 @@ class MyRegistration extends Component {
       urepassword: "",
       isValid: true,
       error: "",
-      res: []
+      result: []
     });
   };
 
+  componentDidMount = () => {
+    this.props.dispatch(Actions.loginUser());
+  };
+
+  static getDerivedStateFromProps(newProps, prevState) {
+    console.log("new props in derived state", newProps.result);
+    if (newProps.result !== prevState.result) {
+      console.log(" in Derived state newprops from result", newProps.result);
+      return { result: newProps.result };
+    }
+    return null;
+  }
+
   onSubmit = e => {
+    this.setState({ error: "" });
     const newUser = {
       name: this.state.uname,
       email: this.state.uemail,
       phonenumber: this.state.uphonenumber,
       password: this.state.upassword
     };
-
     console.log("in OnSubmit");
-
     if (this.state.uname.length < 6) {
       console.log("name length");
       // alert("length of the name must be more than 5");
@@ -82,20 +96,22 @@ class MyRegistration extends Component {
       });
     }
     if (this.state.error === "" || this.state.error === "undefined") {
-      fetch("http://localhost:5000/adduser", {
-        method: "POST",
-        headers: {
-          // Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(newUser)
-      })
-        .then(response => {
-          console.log("res", response);
-          return response.json();
-        })
-        .catch(err => console.log(err));
-      this.onClear();
+      let Unique = this.state.result.filter(record => {
+        if (record.email === this.state.uemail) {
+          return "Duplicate";
+        }
+        return "";
+      });
+      if (Unique.length > 0) {
+        this.setState({
+          isValid: false,
+          error: "Email already exist"
+        });
+      } else {
+        this.props.dispatch(Actions.registerUser(newUser));
+        this.onClear();
+        this.props.history.push("./MyLogin");
+      }
     }
   };
 
@@ -177,4 +193,11 @@ class MyRegistration extends Component {
   }
 }
 
-export default MyRegistration;
+const MapStateToProps = state => {
+  return {
+    result: state.login.signUpUsersList
+  };
+};
+
+export default connect(MapStateToProps)(MyRegistration);
+// export default MyRegistration;

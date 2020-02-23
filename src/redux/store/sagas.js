@@ -9,21 +9,18 @@ import {
   takeLatest
 } from "redux-saga/effects";
 import * as Types from "../actions/types";
-import { GetDataFromServer, deletePost } from "../service";
-import { readpost } from "../actions";
+import {
+  GetDataFromServer,
+  deletePost,
+  GetDataFromServerToPost
+} from "../service";
 
 function* fetchLoginUser(action) {
   try {
     const baseUrl = "http://localhost:5000/getuser";
 
     console.log("Action in fetchloginUser at sagas->" + JSON.stringify(action));
-    let formBody = {};
-    formBody.email = action.email; //action.code;
-    formBody.password = action.password; //action.provider;
-    // formBody.age = "34";
-    //const reqMethod = "POST";
     const reqMethod = "";
-    // const loginUrl = baseUrl + "/view";
     const response = yield call(GetDataFromServer, baseUrl, reqMethod, "");
 
     const result = yield response.json();
@@ -41,6 +38,31 @@ function* fetchLoginUser(action) {
   } catch (error) {
     // yield put({ type: Types.SERVER_CALL_FAILED, error: error.message });
     console.log(error);
+  }
+}
+
+function* registerNewUser(action) {
+  try {
+    const baseUrl = "http://localhost:5000/adduser";
+    const formBody = action.payload;
+    const reqMethod = "POST";
+    const response = yield call(
+      GetDataFromServer,
+      baseUrl,
+      reqMethod,
+      formBody
+    );
+    const result = yield response.text();
+    console.log("result in json", result);
+    if (result.error) {
+      console.log("not added to db", result.error);
+      yield put({ type: Types.REGISTER_USER_ERROR, error: result.error });
+    } else {
+      console.log("added to db", result);
+      yield put({ type: Types.REGISTER_USER_SUCCESS, result });
+    }
+  } catch (error) {
+    console.log("error in sagas registerNewUser method: ", error);
   }
 }
 
@@ -112,6 +134,7 @@ function* readallpost(action) {
 
 export default function* rootSaga(params) {
   yield takeLatest(Types.LOGIN_USER, fetchLoginUser);
+  yield takeLatest(Types.REGISTER_USER, registerNewUser);
   yield takeLatest(Types.CREATE_POST, createpost);
   yield takeLatest(Types.DELETE_POST, deletepost);
   yield takeLatest(Types.READ_POST, readallpost);
