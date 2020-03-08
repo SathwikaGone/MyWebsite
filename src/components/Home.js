@@ -12,45 +12,14 @@ class Home extends Component {
     obj: []
   };
   componentDidMount() {
-    //https://jsonplaceholder.typicode.com/posts?_limit=7
-    // fetch("https://jsonplaceholder.typicode.com/posts?_limit=7", {
-    //   method: "GET",
-    //   header: { "Content-Type": "application/json" }
-    // })
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     this.setState({
-    //       posts: data
-    //     });
-    //     console.log(data);
-    //   });
-    // console.log(this.state.posts);
-    // this.props.dispatch(Actions.readpost());
+    this.props.dispatch(Actions.readpost());
     console.log("readpost in component did mount ", this.state.posts);
   }
 
-  onChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
-
-  onSubmit = e => {
-    e.preventDefault();
-    const obj = {
-      userId: this.state.userId,
-      pid: this.state.pid,
-      title: this.state.title,
-      body: this.state.body
-    };
-    this.props.dispatch(Actions.createpost(obj));
-    console.log("submitted");
-  };
-
   componentDidUpdate(newProps, prevState) {
-    if (newProps.list !== prevState.posts) {
+    if (newProps.result !== prevState.posts) {
       console.log("in component will update", newProps.result);
-      this.setState({ posts: newProps.list });
+      this.setState({ posts: newProps.result });
       console.log("result in state", this.state.posts);
     }
   }
@@ -59,63 +28,41 @@ class Home extends Component {
     e.preventDefault();
     this.props.dispatch(Actions.deletepost(pid));
   };
+  editPost = (e, post) => {
+    e.preventDefault();
+    this.props.dispatch(Actions.editpost(post));
+    this.props.history.push("/MyPostEdit");
+  };
 
   render() {
+    let post = this.state.posts;
+    let posts = post.reverse();
     return (
       <div>
-        <form>
-          <p style={{ textAlign: "center" }}> create new post</p>
-          <label>
-            User Id
-            <input
-              name="userId"
-              value={this.state.userId || ""}
-              onChange={this.onChange}
-            ></input>
-          </label>
-          <label>
-            Item Id
-            <input
-              name="pid"
-              value={this.state.pid || ""}
-              onChange={this.onChange}
-            ></input>
-          </label>
-          <label>
-            Title
-            <input
-              name="title"
-              value={this.state.title || ""}
-              onChange={this.onChange}
-            ></input>
-          </label>
-          <label>
-            Body
-            <input
-              name="body"
-              value={this.state.body || ""}
-              onChange={this.onChange}
-            ></input>
-          </label>
-          <button onClick={this.onSubmit}>Submit</button>
-        </form>
-        <div>
-          <p>Posts:</p>
-          <div className="allposts">
-            {this.state.posts.map(post => (
-              <div className="singlepost">
-                <p>Title: {post.title}</p>
-                <br /> <p>Body: {post.body}!</p>
-                <br />
-                <button
-                  style={{ maxWidth: "50px" }}
-                  onClick={e => this.deletePost(e, post.pid)}
-                >
-                  &times;
-                </button>
-              </div>
-            ))}
-          </div>
+        <h2 style={{ textAlign: "center" }}>
+          <i>POSTS</i>
+        </h2>
+        <div className="allposts">
+          {posts.map(post => (
+            <div className="singlepost">
+              <p id="post-title">
+                <b>{post.title}</b>
+              </p>
+              <br /> <p> {post.body}!</p>
+              <button
+                style={{ maxWidth: "50px", bottom: "10px" }}
+                onClick={e => this.deletePost(e, post.id)}
+              >
+                Delete
+              </button>
+              <button
+                style={{ maxWidth: "50px", bottom: "10px" }}
+                onClick={e => this.editPost(e, post)}
+              >
+                Edit
+              </button>
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -125,8 +72,7 @@ class Home extends Component {
 const mapStateToProps = state => {
   console.log("mapStateToProps", state);
   return {
-    result: state.postReducer.post,
-    list: state.postReducer.list
+    result: state.postReducer.post
   };
 };
 

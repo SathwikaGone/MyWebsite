@@ -20,13 +20,12 @@ describe("Test case for login", () => {
     });
     expect(wrapper.state("uname")).toEqual("sathwika");
   });
-
-  test("username check length", () => {
-    wrapper = shallow(<MyRegistration />);
-    // wrapper.find('input[type="text"]').simulate("change", {
-    //   target: { name: "uname", value: "sathwika" }
-    // });
-    wrapper.find("button").simulate("click");
-    expect(wrapper.on).toEqual("sathwika");
-  });
+  //   test("username check length", () => {
+  //     wrapper = shallow(<MyRegistration />);
+  //     // wrapper.find('input[type="text"]').simulate("change", {
+  //     //   target: { name: "uname", value: "sathwika" }
+  //     // });
+  //     wrapper.find("button").simulate("click");
+  //     expect(wrapper.on).toEqual("sathwika");
+  //   });
 });

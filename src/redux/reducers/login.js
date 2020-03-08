@@ -76,6 +76,13 @@ export default (state = initialUserObj, action) => {
       return registerUserSuccess(state, action);
     case Types.REGISTER_USER_ERROR:
       return registerUserError(state);
+    case "LOGIN_STATUS":
+      let newState = { ...state };
+      newState = Object.assign({}, state, {
+        loggedIn: action.payload
+      });
+      console.log("STATE->" + JSON.stringify(newState));
+      return { ...newState };
     default:
       return state;
   }

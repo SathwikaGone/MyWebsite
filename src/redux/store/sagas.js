@@ -100,7 +100,7 @@ function* deletepost(action) {
     const mustUrl = baseUrl + "/" + formBody;
 
     const response = yield call(deletePost, mustUrl);
-    const result = yield response.json();
+    const result = yield response;
     if (result.error) {
       yield put({
         type: Types.DELETE_POST_ERROR,
@@ -118,7 +118,7 @@ function* deletepost(action) {
 }
 
 function* readallpost(action) {
-  const baseUrl = "https://jsonplaceholder.typicode.com/posts";
+  const baseUrl = "https://jsonplaceholder.typicode.com/posts?_limit=16";
   const reqMethod = "";
   const response = yield call(GetDataFromServer, baseUrl, reqMethod, "");
   const result = yield response.json();
@@ -132,12 +132,43 @@ function* readallpost(action) {
   }
 }
 
+function* editMyPost(action) {
+  try {
+    const baseUrl = "https://jsonplaceholder.typicode.com/posts";
+    let formBody = action.payload;
+    const mustUrl = baseUrl + "/" + formBody.id;
+    const reqMethod = "PUT";
+
+    const response = yield call(
+      GetDataFromServerToPost,
+      mustUrl,
+      reqMethod,
+      formBody
+    );
+    const result = yield response.json();
+    if (result.error) {
+      yield put({
+        type: Types.EDIT_POST_ERROR,
+        error: result.error
+      });
+    } else {
+      yield put({
+        type: Types.EDIT_POST_SUCCESS,
+        result
+      });
+    }
+  } catch (error) {
+    console.log("error at saga editpost", error);
+  }
+}
+
 export default function* rootSaga(params) {
   yield takeLatest(Types.LOGIN_USER, fetchLoginUser);
   yield takeLatest(Types.REGISTER_USER, registerNewUser);
   yield takeLatest(Types.CREATE_POST, createpost);
   yield takeLatest(Types.DELETE_POST, deletepost);
   yield takeLatest(Types.READ_POST, readallpost);
+  yield takeLatest(Types.EDIT_POST, editMyPost);
 
   console.log("ROOT SAGA");
 }

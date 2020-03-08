@@ -42,7 +42,7 @@ export function GetDataFromServerToPost(apiPath, reqMethod, formBody) {
   if (formBody) {
     let fetchData = {
       method: reqMethod,
-      body: formBody,
+      body: JSON.stringify(formBody),
       headers: myHeaders
     };
     return fetch(apiPath, fetchData);

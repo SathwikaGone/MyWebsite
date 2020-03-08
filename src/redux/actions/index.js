@@ -32,3 +32,16 @@ export const deletepost = id => {
     payload: id
   };
 };
+export const editpost = obj => {
+  return {
+    type: Types.EDIT_POST,
+    payload: obj
+  };
+};
+
+export const loginStatus = p => {
+  return {
+    type: "LOGIN_STATUS",
+    payload: p
+  };
+};

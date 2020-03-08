@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createpost, readpost } from "../redux/actions";
+import { createpost } from "../redux/actions";
 
 function LandingPage() {
   const list = useSelector(state => state.postReducer.post);

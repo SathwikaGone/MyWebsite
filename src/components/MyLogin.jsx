@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 // import { useHistory } from "react-router-dom";
-import { loginUser } from "../redux/actions/index";
+import { loginUser, loginStatus } from "../redux/actions/index";
 // import Facebook from "./Facebook";
 // import FacebookLogin from "react-facebook-login";
 
@@ -50,6 +50,7 @@ class MyLogin extends Component {
 
   onSubmit = () => {
     console.log("in OnSubmit");
+    this.setState({ error: "" });
     if (this.state.upassword.length < 6) {
       this.setState({
         isValid: false,
@@ -77,6 +78,8 @@ class MyLogin extends Component {
       console.log("val" + val);
       if (val.length > 0) {
         this.props.history.push("./Home");
+        let p = true;
+        this.props.dispatch(loginStatus(p));
       } else {
         this.setState({
           isValid: false,

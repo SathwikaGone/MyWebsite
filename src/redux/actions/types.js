@@ -28,3 +28,8 @@ export const READ_POST_SERVER_RESPONSE_SUCCESS =
 export const DELETE_POST = "DELETE_POST";
 export const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS";
 export const DELETE_POST_ERROR = "DELETE_POST_ERROR";
+
+// edit post
+export const EDIT_POST = "EDIT_POST";
+export const EDIT_POST_SUCCESS = "EDIT_POST_SUCCESS";
+export const EDIT_POST_ERROR = "EDIT_POST_ERROR";
