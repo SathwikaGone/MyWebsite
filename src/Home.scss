@@ -1,0 +1,47 @@
+$button-color: #386bd1;
+@mixin boxx {
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+/*Home page posts css*/
+.Home {
+  h2 {
+    margin: 1em auto 1em auto;
+    text-align: center;
+    font-size: 2em;
+    color: $button-color;
+  }
+  .allposts {
+    margin: 10px 2em 0 auto;
+  }
+  .singlepost {
+    @include boxx;
+    background-color: #f4dada;
+    padding: 20px;
+    width: 25em;
+    height: 20em;
+    margin: auto auto 1em 5em;
+    float: left;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  #post-title {
+    background-color: #f6eec7;
+    box-sizing: border-box;
+    padding: 5px;
+    color: black;
+    border-radius: 5px;
+  }
+  button {
+    max-width: "50px";
+    bottom: "10px";
+    text-align: center;
+    border-radius: 5px;
+    margin: 15px auto 10px 30px;
+    background-color: $button-color;
+    color: white;
+    width: 30%;
+    height: 30px;
+  }
+}

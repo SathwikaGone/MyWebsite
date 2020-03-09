@@ -38,10 +38,8 @@ class Home extends Component {
     let post = this.state.posts;
     let posts = post.reverse();
     return (
-      <div>
-        <h2 style={{ textAlign: "center" }}>
-          <i>POSTS</i>
-        </h2>
+      <div className="Home">
+        <h2>POSTS</h2>
         <div className="allposts">
           {posts.map(post => (
             <div className="singlepost">
@@ -49,18 +47,8 @@ class Home extends Component {
                 <b>{post.title}</b>
               </p>
               <br /> <p> {post.body}!</p>
-              <button
-                style={{ maxWidth: "50px", bottom: "10px" }}
-                onClick={e => this.deletePost(e, post.id)}
-              >
-                Delete
-              </button>
-              <button
-                style={{ maxWidth: "50px", bottom: "10px" }}
-                onClick={e => this.editPost(e, post)}
-              >
-                Edit
-              </button>
+              <button onClick={e => this.deletePost(e, post.id)}>Delete</button>
+              <button onClick={e => this.editPost(e, post)}>Edit</button>
             </div>
           ))}
         </div>

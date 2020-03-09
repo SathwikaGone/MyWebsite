@@ -109,42 +109,6 @@ form > h2 {
   text-align: center;
 }
 
-/*Home page posts css*/
-.allposts {
-  /* max-width: 1400px;*/
-  margin: 10px 2em 0 auto;
-  justify-content: space-evenly;
-  /* justify-content: space-between; */
-}
-
-.singlepost {
-  border-radius: 5px;
-  background-color: #f4dada;
-  box-sizing: border-box;
-  padding: 20px;
-  width: 350px;
-  height: 20em;
-  margin-bottom: 3em;
-  /* display: flex; */
-
-  margin-left: 1em;
-  flex-basis: 30%;
-  /* flex: 1px; */
-
-  float: left;
-  /* flex-direction: row; */
-
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
-
-#post-title {
-  background-color: #f6eec7;
-  box-sizing: border-box;
-  padding: 5px;
-  color: black;
-  border-radius: 5px;
-}
-
 @media only screen and (max-width: 700px) {
   header > h2 {
     margin-top: 20px;

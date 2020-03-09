@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import "./Home.scss";
 import MyHeader from "./components/MyHeader";
 import MyLogin from "./components/MyLogin";
 import MyRegistration from "./components/MyRegistration";
