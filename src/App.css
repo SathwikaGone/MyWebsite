@@ -30,10 +30,11 @@ header {
   overflow: hidden;
 }
 
-header > h1 {
+.CYCNav {
   margin-top: 15px;
   color: white;
   float: left;
+  text-decoration: none;
 }
 
 .linkright {
@@ -110,7 +111,7 @@ form > h2 {
 }
 
 @media only screen and (max-width: 700px) {
-  header > h2 {
+  header > h2 > link {
     margin-top: 20px;
     color: white;
     text-align: center;

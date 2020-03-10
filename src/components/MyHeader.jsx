@@ -23,11 +23,7 @@ class MyHeader extends Component {
           <Link className="headerLink" to="/CreatePost">
             CreatePost
           </Link>
-          <Link
-            className="headerLink"
-            to="/Logout"
-            onClick={this.Signout.bind(this)}
-          >
+          <Link className="headerLink" to="/" onClick={this.Signout.bind(this)}>
             Signout
           </Link>
         </div>
@@ -48,7 +44,11 @@ class MyHeader extends Component {
       <div>
         <header>
           {/**<img id="logo" src={logo} alt="working on it" /> */}
-          <h1 style={{ marginLeft: "2em" }}>CYC</h1>
+          <h1 style={{ marginLeft: "2em" }}>
+            <Link className="CYCNav" to="/">
+              CYC
+            </Link>
+          </h1>
           <nav>{nav}</nav>
         </header>
       </div>
