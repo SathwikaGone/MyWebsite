@@ -10,6 +10,7 @@ import LandingPage from "./components/LandingPage";
 import MyChat from "./components/MyChat";
 import CreatePost from "./components/CreatePost";
 import IndexPage from "./components/Index";
+import Test from "./components/Test";
 import MyPostEdit from "./components/MyPostEdit";
 import NoMatch from "./components/NoMatch";
 import { connect } from "react-redux";
@@ -38,7 +39,6 @@ class App extends Component {
             <Route exact path="/MyLogin" component={MyLogin} />
             <Route exact path="/MyRegistration" component={MyRegistration} />
             <Route exact path="/LazyLoadingPage" component={LazyLoadingPage} />
-
             {ele}
             <Route component={NoMatch} />
           </Switch>

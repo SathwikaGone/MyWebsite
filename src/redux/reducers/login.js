@@ -79,7 +79,9 @@ export default (state = initialUserObj, action) => {
     case "LOGIN_STATUS":
       let newState = { ...state };
       newState = Object.assign({}, state, {
-        loggedIn: action.payload
+        loggedIn: action.payload.status,
+        presentUser: action.payload.user,
+        presentUserPWD: action.payload.pwd
       });
       console.log("STATE->" + JSON.stringify(newState));
       return { ...newState };

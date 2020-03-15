@@ -118,7 +118,7 @@ function* deletepost(action) {
 }
 
 function* readallpost(action) {
-  const baseUrl = "https://jsonplaceholder.typicode.com/posts?_limit=16";
+  const baseUrl = "https://jsonplaceholder.typicode.com/posts";
   const reqMethod = "";
   const response = yield call(GetDataFromServer, baseUrl, reqMethod, "");
   const result = yield response.json();
@@ -169,6 +169,8 @@ export default function* rootSaga(params) {
   yield takeLatest(Types.DELETE_POST, deletepost);
   yield takeLatest(Types.READ_POST, readallpost);
   yield takeLatest(Types.EDIT_POST, editMyPost);
-
-  console.log("ROOT SAGA");
+  yield takeEvery(Types.ADD_MESSAGE, action => {
+    action.author = params.username;
+    params.socket.send(JSON.stringify(action));
+  });
 }

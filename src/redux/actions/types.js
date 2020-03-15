@@ -33,3 +33,9 @@ export const DELETE_POST_ERROR = "DELETE_POST_ERROR";
 export const EDIT_POST = "EDIT_POST";
 export const EDIT_POST_SUCCESS = "EDIT_POST_SUCCESS";
 export const EDIT_POST_ERROR = "EDIT_POST_ERROR";
+
+// chat types
+export const ADD_MESSAGE = "ADD_MESSAGE";
+export const ADD_USER = "ADD_USER";
+export const MESSAGE_RECEIVED = "MESSAGE_RECEIVED";
+export const USERS_LIST = "USERS_LIST";

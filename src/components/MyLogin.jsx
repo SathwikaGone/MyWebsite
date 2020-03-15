@@ -78,7 +78,12 @@ class MyLogin extends Component {
       console.log("val" + val);
       if (val.length > 0) {
         this.props.history.push("./Home");
-        let p = true;
+        console.log(this.props.history);
+        let p = {
+          status: true,
+          user: this.state.uemail,
+          pwd: this.state.upassword
+        };
         this.props.dispatch(loginStatus(p));
       } else {
         this.setState({
@@ -103,7 +108,6 @@ class MyLogin extends Component {
       console.log(" in Derived state newprops from result", newProps.result);
       return { result: newProps.result };
     }
-
     return null;
   }
   render() {
