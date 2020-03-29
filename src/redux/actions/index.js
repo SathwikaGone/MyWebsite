@@ -76,3 +76,10 @@ export const usersList = users => {
     users
   };
 };
+
+export const MessageLists = MessageLists => {
+  return {
+    type: Types.MessageList,
+    MessageLists
+  };
+};

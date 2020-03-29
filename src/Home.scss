@@ -1,4 +1,4 @@
-$button-color: #386bd1;
+$button-color: #477ff0;
 @mixin boxx {
   box-sizing: border-box;
   border-radius: 5px;
@@ -16,14 +16,20 @@ $button-color: #386bd1;
     margin: 10px 2em 0 auto;
   }
   .singlepost {
+    // background-color: #f4dada;
     @include boxx;
-    background-color: #f4dada;
     padding: 20px;
     width: 25em;
     height: 20em;
-    margin: auto auto 1em 5em;
+    margin: auto auto 2em 5em;
     float: left;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+  .singlepost:nth-child(even) {
+    background-color: rgb(247, 163, 163);
+  }
+  .singlepost:nth-child(odd) {
+    background-color: rgb(175, 240, 236);
   }
 
   #post-title {

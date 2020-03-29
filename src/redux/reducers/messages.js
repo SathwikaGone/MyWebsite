@@ -19,6 +19,11 @@ const messages = (state = initialState, action) => {
         ]
       });
       return newArray;
+    case Types.MessageList:
+      newArray = Object.assign({}, state, {
+        messages: [...state.messages.concat(action.MessageLists)]
+      });
+      return newArray;
     case Types.ADD_USER:
       newArray = Object.assign({}, state, {
         users: [

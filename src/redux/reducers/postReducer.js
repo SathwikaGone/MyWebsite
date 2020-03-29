@@ -7,8 +7,8 @@ const initialstate = {
 // method
 const postReducer = (state = initialstate, action) => {
   switch (action.type) {
-    case Types.CREATE_POST:
-      return state;
+    // case Types.CREATE_POST:
+    //   return state;
     case Types.CREATE_POST_SERVER_RESPONSE_ERROR:
       return createPostError(state);
     case Types.CREATE_POST_SERVER_RESPONSE_SUCCESS:
@@ -25,8 +25,8 @@ const postReducer = (state = initialstate, action) => {
       return deletePostSuccess(state, action);
     case Types.DELETE_POST_ERROR:
       return deletePostError(state);
-    case Types.READ_POST:
-      return state;
+    // case Types.READ_POST:
+    //   return state;
     case Types.READ_POST_SERVER_RESPONSE_ERROR:
       return readPostError(state);
     case Types.READ_POST_SERVER_RESPONSE_SUCCESS:

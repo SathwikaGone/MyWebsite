@@ -19,7 +19,9 @@ import LazyLoadingPage from "./components/LazyLoadingPage";
 class App extends Component {
   render() {
     var ele = "";
-    if (this.props.loggedin) {
+    let data = sessionStorage.getItem("Token");
+
+    if (this.props.loggedin || data === "true") {
       ele = (
         <React.Fragment>
           <Route exact path="/MyChat" component={MyChat} />

@@ -4,7 +4,6 @@ import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas";
 import reducers from "../reducers/index";
 import setupSocket from "../../Socket/index";
-import username from "../../components/ChatComponents/UserName";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -22,7 +21,8 @@ const store = createStore(
 // const store = createStore(reducers, applyMiddleware(...middleware));
 const state = store.getState();
 
-// let username = state.login.presentUser;
+let username = state.login.presentUser;
+console.log("username in store", username);
 const socket = setupSocket(store.dispatch, username);
 sagaMiddleware.run(rootSaga, { socket, username });
 

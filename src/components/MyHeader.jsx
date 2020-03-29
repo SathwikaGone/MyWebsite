@@ -8,25 +8,33 @@ class MyHeader extends Component {
   Signout = () => {
     let p = false;
     this.props.dispatch(loginStatus(p));
+    sessionStorage.clear();
   };
   render() {
     let nav;
-    if (this.props.loggedin === true) {
+    let data = sessionStorage.getItem("Token");
+    if (this.props.loggedin === true || data === "true") {
       nav = (
-        <div className="linkright">
-          <Link className="headerLink" to="/Home">
-            Home
-          </Link>
-          <Link className="headerLink" to="/MyChat">
-            Chat
-          </Link>
-          <Link className="headerLink" to="/CreatePost">
-            CreatePost
-          </Link>
-          <Link className="headerLink" to="/" onClick={this.Signout.bind(this)}>
-            Signout
-          </Link>
-        </div>
+        <React.Fragment>
+          <div className="linkright">
+            <Link className="headerLink" to="/Home">
+              Home
+            </Link>
+            <Link className="headerLink" to="/MyChat">
+              Chat
+            </Link>
+            <Link className="headerLink" to="/CreatePost">
+              CreatePost
+            </Link>
+            <Link
+              className="headerLink"
+              to="/"
+              onClick={this.Signout.bind(this)}
+            >
+              Signout
+            </Link>
+          </div>
+        </React.Fragment>
       );
     } else {
       nav = (
@@ -49,7 +57,7 @@ class MyHeader extends Component {
               CYC
             </Link>
           </h1>
-          <nav>{nav}</nav>
+          {nav}
         </header>
       </div>
     );

@@ -21,6 +21,18 @@ const ErrorValidationLabel = ({ txtLbl }) => (
     {txtLbl}
   </label>
 );
+// interface IState {
+//   uemail: string;
+//   upassword: string;
+//   error: string;
+//   isValid: boolean;
+//   result: [];
+// }
+// interface Props {
+//   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+//   onAdd: (event: React.FormEvent<HTMLFormElement>) => void;
+// }
+
 class MyLogin extends Component {
   state = {
     uemail: "",
@@ -30,8 +42,8 @@ class MyLogin extends Component {
     result: []
   };
 
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
     // console.log([e.target.name] + " is " + e.target.value);
   };
 
@@ -78,13 +90,13 @@ class MyLogin extends Component {
       console.log("val" + val);
       if (val.length > 0) {
         this.props.history.push("./Home");
-        console.log(this.props.history);
         let p = {
           status: true,
           user: this.state.uemail,
           pwd: this.state.upassword
         };
         this.props.dispatch(loginStatus(p));
+        sessionStorage.setItem("Token", "true");
       } else {
         this.setState({
           isValid: false,
@@ -127,7 +139,7 @@ class MyLogin extends Component {
               type="email"
               id="ulemail"
               name="uemail"
-              value={this.state.uname}
+              value={this.state.uemail}
               onChange={this.onChange}
             />
           </label>
