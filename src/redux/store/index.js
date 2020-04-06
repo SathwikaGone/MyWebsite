@@ -22,8 +22,10 @@ const store = createStore(
 const state = store.getState();
 
 let username = state.login.presentUser;
-console.log("username in store", username);
-const socket = setupSocket(store.dispatch, username);
+let dispatchh = store.dispatch;
+// console.log("username in store", username);
+export const socket = setupSocket(store.dispatch, username);
+
 sagaMiddleware.run(rootSaga, { socket, username });
 
 //sagaMiddleware.run(rootSaga);

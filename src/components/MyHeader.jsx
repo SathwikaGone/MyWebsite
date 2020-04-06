@@ -12,8 +12,8 @@ class MyHeader extends Component {
   };
   render() {
     let nav;
-    let data = sessionStorage.getItem("Token");
-    if (this.props.loggedin === true || data === "true") {
+    let Token = sessionStorage.getItem("Token");
+    if (Token !== null && Token !== "undefined") {
       nav = (
         <React.Fragment>
           <div className="linkright">
@@ -64,9 +64,9 @@ class MyHeader extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    loggedin: state.login.loggedIn
+    loggedin: state.login.loggedIn,
   };
 };
 export default connect(mapStateToProps)(MyHeader);

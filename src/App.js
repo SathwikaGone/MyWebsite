@@ -19,9 +19,9 @@ import LazyLoadingPage from "./components/LazyLoadingPage";
 class App extends Component {
   render() {
     var ele = "";
-    let data = sessionStorage.getItem("Token");
+    let Token = sessionStorage.getItem("Token");
 
-    if (this.props.loggedin || data === "true") {
+    if (Token !== null && Token !== "undefined") {
       ele = (
         <React.Fragment>
           <Route exact path="/MyChat" component={MyChat} />
@@ -50,9 +50,9 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    loggedin: state.login.loggedIn
+    loggedin: state.login.loggedIn,
   };
 };
 

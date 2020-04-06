@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 // import { useHistory } from "react-router-dom";
-import { loginUser, loginStatus } from "../redux/actions/index";
+import * as Actions from "../redux/actions/index";
+import { userInfo } from "os";
 // import Facebook from "./Facebook";
 // import FacebookLogin from "react-facebook-login";
 
@@ -15,7 +16,7 @@ const ErrorValidationLabel = ({ txtLbl }) => (
       textAlign: "center",
       width: "86%",
       minHeight: "30px",
-      marginTop: "5px"
+      marginTop: "5px",
     }}
   >
     {txtLbl}
@@ -33,76 +34,59 @@ const ErrorValidationLabel = ({ txtLbl }) => (
 //   onAdd: (event: React.FormEvent<HTMLFormElement>) => void;
 // }
 
-class MyLogin extends Component {
+export class MyLogin extends Component {
   state = {
     uemail: "",
     upassword: "",
     error: "",
     isValid: true,
-    result: []
+    result: [],
+    token: "",
+    Failed: "",
   };
 
-  onChange = event => {
+  onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
     // console.log([e.target.name] + " is " + e.target.value);
   };
 
-  onClear = e => {
+  onClear = (e) => {
     console.log("in clear");
     this.setState({
       uemail: "",
       upassword: "",
       error: "",
-      isValid: true
+      isValid: true,
     });
-  };
-  componentDidMount = () => {
-    this.props.dispatch(loginUser());
   };
 
   onSubmit = () => {
+    let userInfo = { email: this.state.uemail, password: this.state.upassword };
     console.log("in OnSubmit");
     this.setState({ error: "" });
     if (this.state.upassword.length < 6) {
       this.setState({
         isValid: false,
-        error: "Password length must be more than 5 characters"
+        error: "Password length must be more than 5 characters",
       });
     } else {
+      this.props.dispatch(Actions.checkUsers(userInfo));
+
       this.onChangePage();
     }
   };
 
   onChangePage = () => {
-    if (this.state.result.length > 0) {
-      let data = this.state.result;
-      console.log("data ", data);
-      const val = data.filter(record => {
-        console.log("record email" + record.email);
-        if (
-          record.email === this.state.uemail &&
-          record.password === this.state.upassword
-        ) {
-          return record;
-        }
-        return null;
+    if (this.state.Failed === "Login Failed") {
+      this.setState({
+        isValid: false,
+        error: "Login failed",
       });
-      console.log("val" + val);
-      if (val.length > 0) {
-        this.props.history.push("./Home");
-        let p = {
-          status: true,
-          user: this.state.uemail,
-          pwd: this.state.upassword
-        };
-        this.props.dispatch(loginStatus(p));
-        sessionStorage.setItem("Token", "true");
-      } else {
-        this.setState({
-          isValid: false,
-          error: "Login failed"
-        });
-      }
+    } else {
+      this.props.dispatch(Actions.loginStatus("true"));
+
+      this.props.history.push("./Home");
+      sessionStorage.setItem("Token", this.state.token);
     }
   };
 
@@ -116,9 +100,16 @@ class MyLogin extends Component {
 
   static getDerivedStateFromProps(newProps, prevState) {
     console.log("new props in derived state", newProps.result);
-    if (newProps.result !== prevState.result) {
+    if (
+      newProps.result !== prevState.result ||
+      newProps.Failed !== prevState.Failed
+    ) {
       console.log(" in Derived state newprops from result", newProps.result);
-      return { result: newProps.result };
+      return {
+        result: newProps.result,
+        token: newProps.token,
+        Failed: newProps.LoginUnsuccessfull,
+      };
     }
     return null;
   }
@@ -136,6 +127,7 @@ class MyLogin extends Component {
           <label htmlFor="email">
             Email:
             <input
+              data-test="email"
               type="email"
               id="ulemail"
               name="uemail"
@@ -168,9 +160,11 @@ class MyLogin extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    result: state.login.signUpUsersList
+    result: state.login.CurrentUser,
+    token: state.login.token,
+    Failed: state.login.LoginUnsuccessfull,
   };
 };
 

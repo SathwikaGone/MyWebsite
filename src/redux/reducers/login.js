@@ -2,7 +2,7 @@ import * as Types from "../actions/types";
 
 // Some of the properties are redundant.
 const initialUserObj = {
-  signUpUsersList: [],
+  CurrentUser: [],
   pending: false,
   loggedIn: false,
   isValidToken: false,
@@ -10,6 +10,7 @@ const initialUserObj = {
   empDetails: {},
   registeredUserDetails: {},
   result: {},
+  LoginUnsuccessfull: "",
   user: {
     email: "",
     displayName: "",
@@ -20,8 +21,8 @@ const initialUserObj = {
     validSince: "",
     disabled: false,
     lastLoginAt: "",
-    createdAt: ""
-  }
+    createdAt: "",
+  },
 };
 
 //storing fetched users to redux store
@@ -30,7 +31,9 @@ const handleLoginSuccess = (state, action) => {
   let newState = { ...state };
   if (action.result !== undefined) {
     newState = Object.assign({}, state, {
-      signUpUsersList: Object.assign([], action.result)
+      CurrentUser: Object.assign([], action.result.users),
+      token: action.result.token,
+      loggedIn: true,
     });
   }
   console.log("STATE->" + JSON.stringify(newState));
@@ -47,7 +50,7 @@ const registernewUser = (state, action) => {
   let newState = { ...state };
   if (action.payload !== undefined) {
     newState = Object.assign({}, state, {
-      registeredUserDetails: Object.assign([], action.payload)
+      registeredUserDetails: Object.assign([], action.payload),
     });
   }
   console.log("STATE->" + JSON.stringify(newState));
@@ -57,7 +60,7 @@ const registerUserSuccess = (state, action) => {
   let newState = { ...state };
   return { ...newState };
 };
-const registerUserError = state => {
+const registerUserError = (state) => {
   let newState = { ...state };
   return { ...newState };
 };
@@ -76,15 +79,17 @@ export default (state = initialUserObj, action) => {
       return registerUserSuccess(state, action);
     case Types.REGISTER_USER_ERROR:
       return registerUserError(state);
-    case "LOGIN_STATUS":
+    case "LOGIN_FAIL":
       let newState = { ...state };
       newState = Object.assign({}, state, {
-        loggedIn: action.payload.status,
-        presentUser: action.payload.user,
-        presentUserPWD: action.payload.pwd
+        LoginUnsuccessfull: "Login Failed",
       });
-      console.log("STATE->" + JSON.stringify(newState));
       return { ...newState };
+    case "LOGIN_STATUS":
+      let newStat = Object.assign({}, state, {
+        loggedIn: action.payload,
+      });
+      return { ...newStat };
     default:
       return state;
   }

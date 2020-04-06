@@ -4,47 +4,53 @@ let nextUserId = 0;
 
 export const loginUser = () => {
   return {
-    type: Types.LOGIN_USER
+    type: Types.LOGIN_USER,
   };
 };
 
-export const registerUser = obj => {
+export const registerUser = (obj) => {
   return {
     type: Types.REGISTER_USER,
-    payload: obj
+    payload: obj,
   };
 };
 
-export const createpost = obj => {
+export const createpost = (obj) => {
   return {
     type: Types.CREATE_POST,
-    payload: obj
+    payload: obj,
   };
 };
 
 export const readpost = () => {
   return {
-    type: Types.READ_POST
+    type: Types.READ_POST,
   };
 };
 
-export const deletepost = id => {
+export const deletepost = (id) => {
   return {
     type: Types.DELETE_POST,
-    payload: id
+    payload: id,
   };
 };
-export const editpost = obj => {
+export const editpost = (obj) => {
   return {
     type: Types.EDIT_POST,
-    payload: obj
+    payload: obj,
   };
 };
 
-export const loginStatus = p => {
+export const loginStatus = (p) => {
   return {
     type: "LOGIN_STATUS",
-    payload: p
+    payload: p,
+  };
+};
+export const checkUsers = (p) => {
+  return {
+    type: "LOGIN_USER",
+    payload: p,
   };
 };
 
@@ -53,11 +59,11 @@ export const addMessage = (message, author) => {
     type: Types.ADD_MESSAGE,
     id: nextMessageId++,
     message,
-    author
+    author,
   };
 };
 
-export const addUser = name => {
+export const addUser = (name) => {
   return { type: Types.ADD_USER, id: nextUserId++, name };
 };
 
@@ -66,20 +72,20 @@ export const messageReceived = (message, author) => {
     type: Types.MESSAGE_RECEIVED,
     id: nextMessageId++,
     message,
-    author
+    author,
   };
 };
 
-export const usersList = users => {
+export const usersList = (users) => {
   return {
     type: Types.USERS_LIST,
-    users
+    users,
   };
 };
 
-export const MessageLists = MessageLists => {
+export const MessageLists = (MessageLists) => {
   return {
     type: Types.MessageList,
-    MessageLists
+    MessageLists,
   };
 };

@@ -12,13 +12,13 @@ const ErrorValidationLabel = ({ txtLbl }) => (
       textAlign: "center",
       width: "86%",
       minHeight: "30px",
-      marginTop: "5px"
+      marginTop: "5px",
     }}
   >
     {txtLbl}
   </label>
 );
-class MyRegistration extends Component {
+export class MyRegistration extends Component {
   state = {
     uname: "",
     uemail: "",
@@ -27,15 +27,15 @@ class MyRegistration extends Component {
     urepassword: "",
     error: "",
     isValid: true,
-    result: []
+    result: [],
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
     // console.log([e.target.name] + " is " + e.target.value);
   };
 
-  onClear = e => {
+  onClear = (e) => {
     console.log("in clear");
     this.setState({
       uname: "",
@@ -45,12 +45,8 @@ class MyRegistration extends Component {
       urepassword: "",
       isValid: true,
       error: "",
-      result: []
+      result: [],
     });
-  };
-
-  componentDidMount = () => {
-    this.props.dispatch(Actions.loginUser());
   };
 
   static getDerivedStateFromProps(newProps, prevState) {
@@ -62,13 +58,13 @@ class MyRegistration extends Component {
     return null;
   }
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     this.setState({ error: "" });
     const newUser = {
       name: this.state.uname,
       email: this.state.uemail,
       phonenumber: this.state.uphonenumber,
-      password: this.state.upassword
+      password: this.state.upassword,
     };
     console.log("in OnSubmit");
     if (this.state.uname.length < 6) {
@@ -76,7 +72,7 @@ class MyRegistration extends Component {
       // alert("length of the name must be more than 5");
       this.setState({
         isValid: false,
-        error: "length of the name must be more than 5"
+        error: "length of the name must be more than 5",
       });
     }
     if (this.state.uphonenumber.length !== 10) {
@@ -84,7 +80,7 @@ class MyRegistration extends Component {
       // alert(" Phone number length is more then 10 digtes");
       this.setState({
         isValid: false,
-        error: "Phone number length is more then 10 digtes"
+        error: "Phone number length is more then 10 digtes",
       });
     }
     if (this.state.upassword !== this.state.urepassword) {
@@ -92,11 +88,11 @@ class MyRegistration extends Component {
       // alert("Password and re-password doesnt match");
       this.setState({
         isValid: false,
-        error: "Password and re-password doesnt match"
+        error: "Password and re-password doesnt match",
       });
     }
     if (this.state.error === "" || this.state.error === "undefined") {
-      let Unique = this.state.result.filter(record => {
+      let Unique = this.state.result.filter((record) => {
         if (record.email === this.state.uemail) {
           return "Duplicate";
         }
@@ -105,7 +101,7 @@ class MyRegistration extends Component {
       if (Unique.length > 0) {
         this.setState({
           isValid: false,
-          error: "Email already exist"
+          error: "Email already exist",
         });
       } else {
         this.props.dispatch(Actions.registerUser(newUser));
@@ -126,7 +122,7 @@ class MyRegistration extends Component {
         <form id="regform">
           <h2>Registration Form</h2>
           {renderValidationError}
-          <label htmlFor="name">
+          <label htmlFor="name" data-test="Name">
             Name:
             <input
               type="text"
@@ -193,11 +189,5 @@ class MyRegistration extends Component {
   }
 }
 
-const MapStateToProps = state => {
-  return {
-    result: state.login.signUpUsersList
-  };
-};
-
-export default connect(MapStateToProps)(MyRegistration);
+export default connect()(MyRegistration);
 // export default MyRegistration;

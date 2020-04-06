@@ -6,19 +6,19 @@ import {
   take,
   fork,
   all,
-  takeLatest
+  takeLatest,
 } from "redux-saga/effects";
 import * as Types from "../actions/types";
 import {
   GetDataFromServer,
   deletePost,
-  GetDataFromServerToPost
+  GetDataFromServerToPost,
 } from "../service";
 
 function* fetchLoginUser(action) {
   try {
-    const baseUrl =
-      "https://ojpkbkzf91.execute-api.us-east-2.amazonaws.com/devp/getuser";
+    const baseUrl = "http://localhost:5000/getuser";
+    // "https://ojpkbkzf91.execute-api.us-east-2.amazonaws.com/devp/getuser";
 
     console.log("Action in fetchloginUser at sagas->" + JSON.stringify(action));
     const reqMethod = "";
@@ -31,7 +31,39 @@ function* fetchLoginUser(action) {
     if (result.error) {
       yield put({
         type: "LOGIN_USER_SERVER_REPONSE_ERROR",
-        error: result.error
+        error: result.error,
+      });
+    } else {
+      yield put({ type: Types.LOGIN_USER_SERVER_RESPONSE_SUCCESS, result });
+    }
+  } catch (error) {
+    // yield put({ type: Types.SERVER_CALL_FAILED, error: error.message });
+    console.log(error);
+  }
+}
+
+function* validateUser(action) {
+  try {
+    const baseUrl = "http://localhost:5000/checkUser";
+    // "https://ojpkbkzf91.execute-api.us-east-2.amazonaws.com/devp/getuser";
+
+    const reqMethod = "POST";
+    const response = yield call(
+      GetDataFromServer,
+      baseUrl,
+      reqMethod,
+      action.payload
+    );
+    const result = yield response.json();
+    console.log(result);
+    if (result.error) {
+      yield put({
+        type: "LOGIN_USER_SERVER_REPONSE_ERROR",
+        error: result.error,
+      });
+    } else if (result.failed) {
+      yield put({
+        type: "LOGIN_FAIL",
       });
     } else {
       yield put({ type: Types.LOGIN_USER_SERVER_RESPONSE_SUCCESS, result });
@@ -45,7 +77,8 @@ function* fetchLoginUser(action) {
 function* registerNewUser(action) {
   try {
     const baseUrl =
-      "https://ojpkbkzf91.execute-api.us-east-2.amazonaws.com/devp/adduser";
+      // "https://ojpkbkzf91.execute-api.us-east-2.amazonaws.com/devp/adduser";
+      "http://localhost:5000/adduser";
     const formBody = action.payload;
     const reqMethod = "POST";
     const response = yield call(
@@ -85,7 +118,7 @@ function* createpost(action) {
     if (result.error) {
       yield put({
         type: Types.CREATE_POST_SERVER_RESPONSE_ERROR,
-        error: result.error
+        error: result.error,
       });
     } else {
       yield put({ type: Types.CREATE_POST_SERVER_RESPONSE_SUCCESS, result });
@@ -106,12 +139,12 @@ function* deletepost(action) {
     if (result.error) {
       yield put({
         type: Types.DELETE_POST_ERROR,
-        error: result.error
+        error: result.error,
       });
     } else {
       yield put({
         type: Types.DELETE_POST_SUCCESS,
-        result
+        result,
       });
     }
   } catch (error) {
@@ -127,7 +160,7 @@ function* readallpost(action) {
   if (result.error) {
     yield put({
       type: Types.READ_POST_SERVER_RESPONSE_ERROR,
-      error: result.error
+      error: result.error,
     });
   } else {
     yield put({ type: Types.READ_POST_SERVER_RESPONSE_SUCCESS, result });
@@ -151,12 +184,12 @@ function* editMyPost(action) {
     if (result.error) {
       yield put({
         type: Types.EDIT_POST_ERROR,
-        error: result.error
+        error: result.error,
       });
     } else {
       yield put({
         type: Types.EDIT_POST_SUCCESS,
-        result
+        result,
       });
     }
   } catch (error) {
@@ -165,13 +198,14 @@ function* editMyPost(action) {
 }
 
 export default function* rootSaga(params) {
-  yield takeLatest(Types.LOGIN_USER, fetchLoginUser);
+  console.log("params", params);
+  yield takeLatest(Types.LOGIN_USER, validateUser);
   yield takeLatest(Types.REGISTER_USER, registerNewUser);
   yield takeLatest(Types.CREATE_POST, createpost);
   yield takeLatest(Types.DELETE_POST, deletepost);
   yield takeLatest(Types.READ_POST, readallpost);
   yield takeLatest(Types.EDIT_POST, editMyPost);
-  yield takeEvery(Types.ADD_MESSAGE, action => {
+  yield takeEvery(Types.ADD_MESSAGE, (action) => {
     action.author = params.username;
     params.socket.send(JSON.stringify(action));
   });
