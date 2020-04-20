@@ -26,6 +26,9 @@ class MyHeader extends Component {
             <Link className="headerLink" to="/CreatePost">
               CreatePost
             </Link>
+            <Link className="headerLink" to="/CreateEvents">
+              CreateEvents
+            </Link>
             <Link
               className="headerLink"
               to="/"

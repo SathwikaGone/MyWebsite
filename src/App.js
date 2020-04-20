@@ -15,23 +15,25 @@ import MyPostEdit from "./components/MyPostEdit";
 import NoMatch from "./components/NoMatch";
 import { connect } from "react-redux";
 import LazyLoadingPage from "./components/LazyLoadingPage";
+import CreateEvents from "./components/CreateEvents";
 
 class App extends Component {
   render() {
     var ele = "";
-    let Token = sessionStorage.getItem("Token");
+    // let Token = sessionStorage.getItem("Token");
 
-    if (Token !== null && Token !== "undefined") {
-      ele = (
-        <React.Fragment>
-          <Route exact path="/MyChat" component={MyChat} />
-          <Route exact path="/Home" component={Home} />
-          <Route exact path="/LandingPage" component={LandingPage} />
-          <Route exact path="/CreatePost" component={CreatePost} />
-          <Route exact path="/MyPostEdit" component={MyPostEdit} />
-        </React.Fragment>
-      );
-    }
+    // if (Token !== null && Token !== "undefined") {
+    ele = (
+      <React.Fragment>
+        <Route exact path="/MyChat" component={MyChat} />
+        <Route exact path="/Home" component={Home} />
+        <Route exact path="/LandingPage" component={LandingPage} />
+        <Route exact path="/CreatePost" component={CreatePost} />
+        <Route exact path="/CreateEvents" component={CreateEvents} />
+        <Route exact path="/MyPostEdit" component={MyPostEdit} />
+      </React.Fragment>
+    );
+    // }
     return (
       <div className="App">
         <Router>

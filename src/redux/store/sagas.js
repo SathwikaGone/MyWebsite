@@ -17,7 +17,7 @@ import {
 
 function* fetchLoginUser(action) {
   try {
-    const baseUrl = "http://localhost:5000/getuser";
+    const baseUrl = "http://localhost:8000/getuser";
     // "https://ojpkbkzf91.execute-api.us-east-2.amazonaws.com/devp/getuser";
 
     console.log("Action in fetchloginUser at sagas->" + JSON.stringify(action));
@@ -44,7 +44,7 @@ function* fetchLoginUser(action) {
 
 function* validateUser(action) {
   try {
-    const baseUrl = "http://localhost:5000/checkUser";
+    const baseUrl = "http://localhost:8000/checkUser";
     // "https://ojpkbkzf91.execute-api.us-east-2.amazonaws.com/devp/getuser";
 
     const reqMethod = "POST";
@@ -78,7 +78,7 @@ function* registerNewUser(action) {
   try {
     const baseUrl =
       // "https://ojpkbkzf91.execute-api.us-east-2.amazonaws.com/devp/adduser";
-      "http://localhost:5000/adduser";
+      "http://localhost:8000/adduser";
     const formBody = action.payload;
     const reqMethod = "POST";
     const response = yield call(
